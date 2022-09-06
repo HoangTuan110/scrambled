@@ -65,7 +65,7 @@ export default function Home({ data }: PageProps<Data>) {
       </p>
       <ol>
         {results.map(ref => {
-          const berry = (ref[0] === null ? ref[1] : ref[0])
+          const item = (ref[0] === null ? ref[1] : ref[0])
           return (
             <li key={item.target} className="search-item">
                 <span className="search-item-score">
