@@ -25,7 +25,7 @@ interface Data {
 export const handler: Handlers<Data> = {
   GET(req, ctx) {
     const url = new URL(req.url)
-    const query = url.searchParams.get("q") || ""
+    let query = url.searchParams.get("q") || ""
     const startMs = getMs()
     const results = fuzzysort.go(query.toLowerCase(), docs)
     const duration = formatNumber(getMs() - startMs)
