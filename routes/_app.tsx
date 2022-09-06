@@ -10,6 +10,7 @@ export default function App(props: AppProps) {
     <>
       <Head>
         <link href={asset('/subreply.min.css')} rel="stylesheet"/>
+        <link href={asset('/custom.css')} rel="stylesheet"/>
       </Head>
       <props.Component />
     </>
