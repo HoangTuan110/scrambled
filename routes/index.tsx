@@ -4,16 +4,12 @@ import fuzzysort from "fuzzysort"
 import { nanoid } from "nanoid"
 import { Handlers, PageProps } from "$fresh/server.ts";
 
+// Constants
+
 // Helper functions
 const highlightRef = ref => `${fuzzysort.highlight(ref, '<mark>', '</mark>')}`
 const formatNumber = n => Math.floor(n*100)/100
 const getMs = () => performance.now()
-
-// Feed some sample docs
-const docs = []
-for (let i = 0; i < 100; i++) {
-  docs.push(nanoid())
-}
 
 // Handling input
 interface Data {
