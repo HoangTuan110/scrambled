@@ -7,7 +7,7 @@ import { Handlers, PageProps } from "$fresh/server.ts";
 // Constants
 const options = {
   limit: 100,
-  threshold: -20000,
+  threshold: -15000,
   keys: ['name']
 }
 
