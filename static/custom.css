@@ -1,4 +1,10 @@
 /* Custom CSS for specific elements */
 mark {
-  color: #dc3545;
+  /*background-color: #4060e0;*/
+  background-color: #dc3545;
+}
+
+/* The button and the input form should have the same height */
+button, input[type="text"] {
+  height: 28px;
 }
