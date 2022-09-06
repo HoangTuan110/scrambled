@@ -1,7 +1,6 @@
 /** @jsx h */
 import { h } from "preact"
 import fuzzysort from "fuzzysort"
-import { nanoid } from "nanoid"
 import { Handlers, PageProps } from "$fresh/server.ts";
 
 // Constants
