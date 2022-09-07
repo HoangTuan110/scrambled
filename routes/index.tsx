@@ -1,6 +1,7 @@
 /** @jsx h */
 import { h } from "preact"
 import fuzzysort from "fuzzysort"
+import marked from "marked"
 import { Handlers, PageProps } from "$fresh/server.ts";
 
 // Constants
@@ -16,6 +17,7 @@ const highlightRef = ref => `${fuzzysort.highlight(ref, '<mark>', '</mark>')}`
 const formatNumber = n => Math.floor(n*100)/100
 const getMs = () => performance.now()
 const search = (query, data) => fuzzysort.go(query, data, options)
+const getMarkdownTitle = content => marked.parse(content)
 // Transforming Markdown notes into documents
 const notesToDocuments = async () => {
   let documents: object[] = []
