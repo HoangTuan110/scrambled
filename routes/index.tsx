@@ -9,12 +9,27 @@ const options = {
   threshold: -15000,
   keys: ['name']
 }
+const PATH = '/home/firefly/.todo/drafts/'
 
 // Helper functions
 const highlightRef = ref => `${fuzzysort.highlight(ref, '<mark>', '</mark>')}`
 const formatNumber = n => Math.floor(n*100)/100
 const getMs = () => performance.now()
 const search = (query, data) => fuzzysort.go(query, data, options)
+// Transforming Markdown notes into documents
+const notesToDocuments = async () => {
+  let documents: object[] = []
+  for await (const fileEntry of Deno.readDir(PATH)) {
+    if (fileEntry.isFile) {
+      const content = await Deno.readTextFile(PATH + fileEntry.name)
+      documents.push({
+        name: fileEntry.name,
+        content: content
+      })
+    }
+  }
+  return documents
+}
 
 // Handling input
 interface Data {
@@ -24,11 +39,12 @@ interface Data {
 }
 
 export const handler: Handlers<Data> = {
-  GET(req, ctx) {
+  async GET(req, ctx) {
     const url = new URL(req.url)
     const query = url.searchParams.get("q") || ""
     const startMs = getMs()
-    let documents: object[] = []
+    const documents: object[] = await notesToDocuments()
+    console.log(documents)
     const results = search(query.toLowerCase(), documents)
     const duration = formatNumber(getMs() - startMs)
     return ctx.render({ results, query, duration })
