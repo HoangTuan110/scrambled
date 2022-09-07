@@ -17,6 +17,7 @@ const formatNumber = n => Math.floor(n*100)/100
 const getMs = () => performance.now()
 const search = (query, data) => fuzzysort.go(query, data, options)
 // Get title in a Markdown document (without any dependencies!)
+// From https://github.com/azu/get-title-markdown/blob/master/lib/get-title-markdown.js#L6,L22
 const headerMatch = /^#+(.*)$/
 const getMarkdownTitle = text => {
     const lines = text.split("\n")
@@ -24,7 +25,8 @@ const getMarkdownTitle = text => {
         return line.length > 0
     })
     if (noEmptyLines.length === 0) {
-        throw new Error("no content")
+      // For files with empty content, we will just skip them
+      return
     }
     const firstLine = noEmptyLines[0]
     const match = firstLine.match(headerMatch)
