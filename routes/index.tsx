@@ -1,7 +1,7 @@
 /** @jsx h */
 import { h } from "preact"
 import fuzzysort from "fuzzysort"
-import marked from "marked"
+import * as marked from "marked"
 import { Handlers, PageProps } from "$fresh/server.ts";
 
 // Constants
@@ -26,6 +26,7 @@ const notesToDocuments = async () => {
       const content = await Deno.readTextFile(PATH + fileEntry.name)
       documents.push({
         name: fileEntry.name,
+        title: getMarkdownTitle(content),
         content: content
       })
     }
