@@ -67,10 +67,12 @@ export default function Home({ data }: PageProps<Data>) {
           const item = (ref[0] === null ? ref[1] : ref[0])
           return (
             <li key={item.target} className="search-item">
+              <a href={`/pokemon/${item.target}`}>
                 <span className="search-item-score">
                   {formatNumber(Math.abs(item.score))} -
                 </span>
                 <code className="seaarch-item-name" dangerouslySetInnerHTML={{__html: highlightRef(item)}} />
+              </a>
             </li>
           )
         })
