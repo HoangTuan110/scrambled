@@ -15,14 +15,6 @@ const highlightRef = ref => `${fuzzysort.highlight(ref, '<mark>', '</mark>')}`
 const formatNumber = n => Math.floor(n*100)/100
 const getMs = () => performance.now()
 const search = (query, data) => fuzzysort.go(query, data, options)
-// Fetch Pokemons from the PokeAPI and turn them into documents
-const fetchData = async () => {
-  const resp = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1154')
-  if (resp.status === 404) {
-    return null
-  }
-  return resp.json().then(data => data.results)
-}
 
 // Handling input
 interface Data {
@@ -32,12 +24,11 @@ interface Data {
 }
 
 export const handler: Handlers<Data> = {
-  async GET(req, ctx) {
+  GET(req, ctx) {
     const url = new URL(req.url)
     const query = url.searchParams.get("q") || ""
     const startMs = getMs()
     let documents: object[] = []
-    await fetchData().then(data => (documents = data))
     const results = search(query.toLowerCase(), documents)
     const duration = formatNumber(getMs() - startMs)
     return ctx.render({ results, query, duration })
@@ -67,7 +58,7 @@ export default function Home({ data }: PageProps<Data>) {
           const item = (ref[0] === null ? ref[1] : ref[0])
           return (
             <li key={item.target} className="search-item">
-              <a href={`/pokemon/${item.target}`}>
+              <a href="/">
                 <span className="search-item-score">
                   {formatNumber(Math.abs(item.score))} -
                 </span>
