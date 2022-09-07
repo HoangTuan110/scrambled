@@ -1,8 +1,6 @@
 /** @jsx h */
 import { h } from "preact"
 import fuzzysort from "fuzzysort"
-import * as marked from "marked"
-import cheerio from "cheerio"
 import { Handlers, PageProps } from "$fresh/server.ts";
 
 // Constants
@@ -18,7 +16,24 @@ const highlightRef = ref => `${fuzzysort.highlight(ref, '<mark>', '</mark>')}`
 const formatNumber = n => Math.floor(n*100)/100
 const getMs = () => performance.now()
 const search = (query, data) => fuzzysort.go(query, data, options)
-const getMarkdownTitle = content => cheerio.load(marked.parse(content))('h1').text()
+// Get title in a Markdown document (without any dependencies!)
+const headerMatch = /^#+(.*)$/
+const getMarkdownTitle = text => {
+    const lines = text.split("\n")
+    const noEmptyLines = lines.filter(line => {
+        return line.length > 0
+    })
+    if (noEmptyLines.length === 0) {
+        throw new Error("no content")
+    }
+    const firstLine = noEmptyLines[0]
+    const match = firstLine.match(headerMatch)
+    if (match == null) {
+        return
+    }
+    const title = match && match[1]
+    return title.trim()
+}
 // Transforming Markdown notes into documents
 const notesToDocuments = async () => {
   let documents: object[] = []
