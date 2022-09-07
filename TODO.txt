@@ -1,7 +1,0 @@
-- [ ] Transform notes into searchable documents
-- [ ] Use a Markdown parser to parse title and content
-- [ ] Have a specific route for reading Markdown content
-- [ ] Support simple entry text metadata for content
-- [ ] Read data from JSON
-- [ ] Config files
-- [ ] Better UI
