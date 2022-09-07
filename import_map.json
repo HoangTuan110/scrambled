@@ -6,6 +6,7 @@
     "preact-render-to-string": "https://esm.sh/preact-render-to-string@5.2.1?external=preact",
     "nanoid": "https://esm.sh/nanoid@4.0.0",
     "fuzzysort": "https://esm.sh/fuzzysort@2.0.1",
+    "cheerio": "https://esm.sh/cheerio@1.0.0-rc.12",
     "marked": "https://esm.sh/marked@4.1.0"
   }
 }
