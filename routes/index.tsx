@@ -2,13 +2,14 @@
 import { h } from "preact"
 import fuzzysort from "fuzzysort"
 import * as marked from "marked"
+import cheerio from "cheerio"
 import { Handlers, PageProps } from "$fresh/server.ts";
 
 // Constants
 const options = {
   limit: 100,
   threshold: -15000,
-  keys: ['name']
+  keys: ['title']
 }
 const PATH = '/home/firefly/.todo/drafts/'
 
@@ -17,7 +18,7 @@ const highlightRef = ref => `${fuzzysort.highlight(ref, '<mark>', '</mark>')}`
 const formatNumber = n => Math.floor(n*100)/100
 const getMs = () => performance.now()
 const search = (query, data) => fuzzysort.go(query, data, options)
-const getMarkdownTitle = content => marked.parse(content)
+const getMarkdownTitle = content => cheerio.load(marked.parse(content))('h1').text()
 // Transforming Markdown notes into documents
 const notesToDocuments = async () => {
   let documents: object[] = []
