@@ -16,7 +16,7 @@ const formatNumber = n => Math.floor(n*100)/100
 const getMs = () => performance.now()
 const search = (query, data) => fuzzysort.go(query, data, options)
 // Fetch Pokemons from the PokeAPI and turn them into documents
-const fetchBerries = async () => {
+const fetchData = async () => {
   const resp = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1154')
   if (resp.status === 404) {
     return null
@@ -37,7 +37,7 @@ export const handler: Handlers<Data> = {
     const query = url.searchParams.get("q") || ""
     const startMs = getMs()
     let documents: object[] = []
-    await fetchBerries().then(data => (documents = data))
+    await fetchData().then(data => (documents = data))
     const results = search(query.toLowerCase(), documents)
     const duration = formatNumber(getMs() - startMs)
     return ctx.render({ results, query, duration })
